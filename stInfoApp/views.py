@@ -35,6 +35,7 @@ def login_page(request):
     default_dict["current_page"] = "login_page"
     return render(request, "login_page.html", default_dict)
 
+# otp page
 def otp_page(request):
     default_dict["current_page"] = "otp_page"
     return render(request, "otp_page.html", default_dict)
