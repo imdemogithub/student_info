@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_content %}
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+
+				<div class="account-content">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-md-7 col-lg-6 login-left">
+							<img src="{% static 'img/login-banner.png' %}" class="img-fluid" alt="Doccure Register">
+						</div>
+						<div class="col-md-12 col-lg-6 login-right">
+							<div class="login-header">
+								<h3>Patient Register <a href="doctor-register.html">Are you a Doctor?</a></h3>
+							</div>
+
+							<form method="POST" action="{% url 'register' %}">
+								{% csrf_token %}
+								<div class="form-group form-focus">
+									<input type="email" name="email" class="form-control floating">
+									<label class="focus-label">Email</label>
+								</div>
+								<div class="form-group form-focus">
+									<input type="password" name="password" class="form-control floating">
+									<label class="focus-label">Create Password</label>
+								</div>
+								
+								<div class="form-group">
+									{% for role in roles %}
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" text="{{role.Name}}" name="role" id="role_{{role.id}}" value="{{role.id}}">
+										<label class="form-check-label" for="role_{{role.id}}">I'm {{role}}</label>
+									</div>
+									{% endfor %}
+								</div>
+								<div class="form-group mt-0 course_list d-none" for="student">
+									<select class="form-select form-control" name="course">
+										<option>Select</option>
+										{% for course in courses %}
+											<option value="{{course.id}}">{{course.CourseName}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="terms-and-policy pt-2 pb-2 d-none">
+									<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox" value="check" id="agree" /><span
+										class="agree">I agree to these <span class="terms"><a href="term-condition.html"
+												target="_blank">Terms of Use</a> and <a href="privacy-policy.html"
+												target="_blank">Privacy Policy</a></span></span>
+											</div>
+								</div>
+								<div class="text-end">
+									<a class="forgot-link" href="{% url 'login_page' %}">Already have an account?</a>
+								</div>
+								<button class="btn btn-primary w-100 btn-lg login-btn" type="submit">Signup</button>
+								<div class="login-or d-none">
+									<span class="or-line"></span>
+									<span class="span-or">or</span>
+								</div>
+								<div class="row form-row social-login d-none">
+									<div class="col-6">
+										<a href="#" class="btn btn-facebook w-100"><i
+												class="fab fa-facebook-f me-1"></i> Login</a>
+									</div>
+									<div class="col-6">
+										<a href="#" class="btn btn-google w-100"><i class="fab fa-google me-1"></i>
+											Login</a>
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+	// code to hide and display course dropdown
+	$('.form-check-input[name="role"]').change(function() {
+		var role = $(this).attr('text');
+
+		$(`.course_list`).addClass('d-none');
+		if (role != 'faculty'){
+			$(`.course_list[for="${role}"]`).removeClass('d-none');
+		}
+	})
+</script>
+{% endblock %}

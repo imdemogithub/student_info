@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                <div class="account-content">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-7 col-lg-6 login-left">
+                            <img src="{% static 'img/login-banner.png' %}" class="img-fluid" alt="Login Banner">
+                        </div>
+                        <div class="col-md-12 col-lg-6 login-right">
+                            <div class="login-header">
+                                <h3>Forgot Password?</h3>
+                                <p class="small text-muted">Enter your email to get a password reset link</p>
+                            </div>
+
+                            <form action="{% if current_page == 'varify_otp' %}{% url current_page varify_for=varify_for %}{% else %}{% url current_page %}{% endif %}" method="post">
+                                {% csrf_token %}
+                                
+
+                                {% if current_page == 'varify_otp' %}
+
+                                <div class="form-group form-focus">
+                                    <input type="password" name="otp" class="form-control floating">
+                                    <label class="focus-label">One Time Password</label>
+                                </div>
+                                <div class="form-group form-focus">
+                                    <input type="password" name="new_password" class="form-control floating">
+                                    <label class="focus-label">New Password</label>
+                                </div>
+                                <div class="form-group form-focus">
+                                    <input type="password" name="conf_password" class="form-control floating">
+                                    <label class="focus-label">Confirm Password</label>
+                                </div>
+
+                                {% elif current_page == 'recover_pwd_page' %}
+                                <div class="form-group form-focus">
+                                    <input type="email" name="email" class="form-control floating">
+                                    <label class="focus-label">Email</label>
+                                </div>
+                                {% endif %}
+
+                                <div class="text-end">
+                                    <a class="forgot-link" href="{% url 'login_page' %}">Remember your password?</a>
+                                </div>
+                                <button class="btn btn-primary w-100 btn-lg login-btn" type="submit">Reset
+                                    Password</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
