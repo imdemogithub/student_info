@@ -160,6 +160,7 @@ def profile_update(request):
     user.DoB = dob
     user.Gender = gender
 
+    # upload an image
     import os
     if 'profile_image' in request.FILES:
         profile_image = request.FILES['profile_image']
